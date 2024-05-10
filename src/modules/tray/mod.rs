@@ -19,6 +19,7 @@ use tokio::sync::mpsc;
 use tracing::{debug, error, warn};
 
 #[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct TrayModule {
     #[serde(default = "crate::config::default_true")]
     prefer_theme_icons: bool,
@@ -27,6 +28,7 @@ pub struct TrayModule {
     icon_size: u32,
 
     #[serde(default, deserialize_with = "deserialize_orientation")]
+    #[cfg_attr(feature = "schema", schemars(schema_with = "schema_orientation"))]
     direction: Option<PackDirection>,
 
     #[serde(flatten)]
@@ -51,6 +53,15 @@ where
             _ => Err(serde::de::Error::custom("invalid value for orientation")),
         })
         .transpose()
+}
+
+#[cfg(feature = "schema")]
+fn schema_orientation(gen: &mut schemars::gen::SchemaGenerator) -> schemars::schema::Schema {
+    // TODO: Impl correctly
+    use schemars::JsonSchema;
+    let mut schema: schemars::schema::SchemaObject = <String>::json_schema(gen).into();
+    schema.format = Some("boolean".to_owned());
+    schema.into()
 }
 
 impl Module<MenuBar> for TrayModule {

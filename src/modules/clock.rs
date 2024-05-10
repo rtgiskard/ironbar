@@ -16,6 +16,7 @@ use crate::modules::{
 use crate::{glib_recv, module_impl, send_async, spawn, try_send};
 
 #[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct ClockModule {
     /// Date/time format string.
     /// Default: `%d/%m/%Y %H:%M`

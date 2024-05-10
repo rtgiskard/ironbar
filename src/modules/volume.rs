@@ -14,6 +14,7 @@ use std::collections::HashMap;
 use tokio::sync::mpsc;
 
 #[derive(Debug, Clone, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct VolumeModule {
     #[serde(default = "default_format")]
     format: String,
@@ -33,6 +34,7 @@ fn default_format() -> String {
 }
 
 #[derive(Debug, Clone, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct Icons {
     #[serde(default = "default_icon_volume_high")]
     volume_high: String,

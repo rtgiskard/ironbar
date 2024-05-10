@@ -18,6 +18,7 @@ use tokio::time::sleep;
 use tracing::{debug, error};
 
 #[derive(Debug, Clone, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct CairoModule {
     path: PathBuf,
 

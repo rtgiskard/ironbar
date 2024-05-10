@@ -10,6 +10,7 @@ use tokio::sync::mpsc::Receiver;
 use tracing::error;
 
 #[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct NotificationsModule {
     #[serde(default = "crate::config::default_true")]
     show_count: bool,
@@ -22,6 +23,7 @@ pub struct NotificationsModule {
 }
 
 #[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 struct Icons {
     #[serde(default = "default_icon_closed_none")]
     closed_none: String,

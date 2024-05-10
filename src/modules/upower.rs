@@ -22,6 +22,7 @@ const HOUR: i64 = 60 * 60;
 const MINUTE: i64 = 60;
 
 #[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct UpowerModule {
     #[serde(default = "default_format")]
     format: String,

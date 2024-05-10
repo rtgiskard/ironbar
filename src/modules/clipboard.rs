@@ -17,6 +17,7 @@ use tokio::sync::{broadcast, mpsc};
 use tracing::{debug, error};
 
 #[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct ClipboardModule {
     #[serde(default = "default_icon")]
     icon: String,

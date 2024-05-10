@@ -14,6 +14,7 @@ use tokio::sync::mpsc;
 use tokio::time::sleep;
 
 #[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct SysInfoModule {
     /// List of formatting strings.
     format: Vec<String>,
@@ -31,6 +32,7 @@ pub struct SysInfoModule {
 }
 
 #[derive(Debug, Deserialize, Copy, Clone)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct Intervals {
     #[serde(default = "default_interval")]
     memory: u64,
@@ -48,6 +50,7 @@ pub struct Intervals {
 
 #[derive(Debug, Deserialize, Copy, Clone)]
 #[serde(untagged)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub enum Interval {
     All(u64),
     Individual(Intervals),

@@ -10,6 +10,7 @@ use tracing::trace;
 /// Common configuration options
 /// which can be set on every module.
 #[derive(Debug, Default, Deserialize, Clone)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct CommonConfig {
     pub class: Option<String>,
     pub name: Option<String>,
@@ -33,6 +34,7 @@ pub struct CommonConfig {
 
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "snake_case")]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub enum TransitionType {
     None,
     Crossfade,
@@ -42,6 +44,7 @@ pub enum TransitionType {
 
 #[derive(Debug, Default, Deserialize, Clone, Copy)]
 #[serde(rename_all = "snake_case")]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub enum ModuleOrientation {
     #[default]
     #[serde(alias = "h")]

@@ -64,6 +64,14 @@ fn main() {
     let _guard = logging::install_logging();
 
     cfg_if! {
+        if #[cfg(feature = "schema")] {
+            let schema = schemars::schema_for!(Config);
+            println!("{}", serde_json::to_string_pretty(&schema).unwrap());
+            return;
+        }
+    }
+
+    cfg_if! {
         if #[cfg(feature = "cli")] {
             run_with_args();
         } else {

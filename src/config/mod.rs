@@ -161,11 +161,19 @@ pub struct BarConfig {
     pub position: BarPosition,
     #[serde(default = "default_true")]
     pub anchor_to_edges: bool,
-    #[serde(default = "default_bar_height")]
-    pub height: i32,
     #[serde(default)]
     pub margin: MarginConfig,
+    #[serde(
+        default = "default_layer",
+        deserialize_with = "r#impl::deserialize_layer"
+    )]
+    pub layer: gtk_layer_shell::Layer,
+    #[serde(default)]
+    pub exclusive_zone: Option<bool>,
     pub name: Option<String>,
+
+    #[serde(default = "default_bar_height")]
+    pub height: i32,
 
     #[serde(default)]
     pub start_hidden: Option<bool>,
@@ -205,9 +213,11 @@ impl Default for BarConfig {
 
         Self {
             position: BarPosition::default(),
-            height: default_bar_height(),
             margin: MarginConfig::default(),
             name: None,
+            layer: default_layer(),
+            exclusive_zone: None,
+            height: default_bar_height(),
             start_hidden: None,
             autohide: None,
             icon_theme: None,
@@ -229,6 +239,10 @@ pub struct Config {
     #[serde(flatten)]
     pub bar: BarConfig,
     pub monitors: Option<HashMap<String, MonitorConfig>>,
+}
+
+const fn default_layer() -> gtk_layer_shell::Layer {
+    gtk_layer_shell::Layer::Top
 }
 
 const fn default_bar_height() -> i32 {

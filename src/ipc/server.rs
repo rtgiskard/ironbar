@@ -284,6 +284,28 @@ impl Ipc {
                     Response::error("Bar not found")
                 }
             }
+            Command::SetExclusive {
+                bar_name,
+                exclusive,
+            } => {
+                let windows = application.windows();
+                let found = windows
+                    .iter()
+                    .find(|window| window.widget_name() == bar_name);
+
+                if let Some(window) = found {
+                    use gtk_layer_shell::LayerShell;
+                    if exclusive {
+                        window.auto_exclusive_zone_enable();
+                    } else {
+                        window.set_exclusive_zone(0);
+                    }
+
+                    Response::Ok
+                } else {
+                    Response::error("Bar not found")
+                }
+            }
         }
     }
 

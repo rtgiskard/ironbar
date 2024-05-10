@@ -79,4 +79,11 @@ pub enum Command {
         /// The name of the monitor the bar is located on.
         bar_name: String,
     },
+
+    SetExclusive {
+        bar_name: String,
+
+        #[arg(short, long)]
+        exclusive: bool,
+    },
 }
